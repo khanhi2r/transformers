@@ -259,7 +259,7 @@ class SeamlessM4Tv2Attention(nn.Module):
                 value_states = torch.cat([past_key_value[1], value_states], dim=2)
 
         query_states = self._shape(self.q_proj(hidden_states) * self.scaling)
-        attention_scores = torch.matmul(query_states, key_states.transpose(-1, -2))
+        attention_scores = torch.matmul(query_states, key_states.transpose(-1, -2)) # TODO - khanh - attention here
 
         if self.is_decoder:
             # if cross_attention save Tuple(torch.Tensor, torch.Tensor) of all cross attention key/value_states.
@@ -1269,7 +1269,7 @@ class SeamlessM4Tv2ConformerSelfAttention(nn.Module):
         key = key.transpose(1, 2)
         value = value.transpose(1, 2)
 
-        attn_weights = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(self.head_size)
+        attn_weights = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(self.head_size) # TODO - khanh - attention here
 
         if self.position_embeddings_type == "relative_key":
             query_length, key_length = query.shape[2], key.shape[2]
